@@ -1,0 +1,48 @@
+.ui.fixed.inverted.menu {
+	position: sticky;
+    height: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.ui.container {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	width: inherit;
+}
+.ui.button {
+	/*font-size: 0.7vw !important;*/
+	width: auto;
+	height: 40px;	
+}
+
+.menu.item.right {
+	float: right;
+}
+
+
+h1{
+	font-size: 60px;
+	text-align: center;
+    margin: 15vh;	
+}
+
+.leftdiv{
+	text-align: center;
+    width: 50%;
+    float: left;
+    padding: 10px 50px;	
+	color: orange;
+}
+
+.rightdiv{
+	text-align: center;
+    width: 50%;
+    float: right;
+    padding: 10px 50px;	
+
+
+}
+
+#physicalphoto{
+	width: 50%;
+}
