@@ -2,25 +2,70 @@ import React, { Component } from 'react';
 import { Button, Input, Icon,Dropdown,Card,Image} from 'semantic-ui-react';
 import {render} from 'react-dom';
 import { Link } from 'react-router-dom';
-import styles from './Home.scss'
+import styles from './Home.scss';
+import axios from 'axios';
 
 
 class Home extends Component {
+
     constructor(props){
         super(props);
         this.state = {
-            name: 'World'
+            name: 'hello',
+            currentJamie: '50A',
+            current: '10A'
         };
-        this.updateName = this.updateName.bind(this);
+        this.getUserCurrent = this.getUserCurrent.bind(this);
+        this.getJamieCurrent = this.getJamieCurrent.bind(this);
     }
-    updateName(){
-        this.setState({
-            name: 'Jamie'
+
+    getUserCurrent(){
+        var username="Jee Haeng";
+        axios.get('/api/current/user?username='+username).then((res) => {
+            // console.log(res.data);
+            console.log(username);
+            if(this.state.current!=res.data.current){
+                this.setState({
+                    current: res.data.current,
+                    name: username
+                });
+            }
+        }).catch((err) => {
+            console.log("frontend GET error: ",err);
         });
-    //     fetch('http://localhost:3000/api')
-    //         .then((res)=>{return res.json()})
-    //         .then((data)=>{this.setState({name:'Jamie'})})
     }
+    getJamieCurrent(){
+        axios.get('/api/current').then((res) => {
+            console.log("Jamie");
+            // console.log("frontend GET res:",res);
+            if(this.state.currentJamie!=res.data.current){
+                this.setState({
+                    currentJamie: res.data.current
+                });
+            }
+        }).catch((err) => {
+            console.log("frontend GET error",err);
+        });
+    }
+    componentDidMount(){
+        console.log("componentDidMount");
+        this.getJamieCurrent();
+        this.getUserCurrent();
+    }
+
+    
+    shouldComponentUpdate(nextProps, nextState){
+        console.log("shouldcomponentupdate");
+        return (nextState!=this.state);
+    }
+    componentDidUpdate(prevProps, prevState){
+        console.log("componentdidupdate");
+        // this.getJamieCurrent();
+        // this.getUserCurrent();
+        
+    }
+
+    
 render(){
     return(
     
@@ -44,6 +89,8 @@ render(){
                 </div>
             </div>
             <h1>Welcome to H.E.A.T!</h1>
+            <h1>Jamie {this.state.currentJamie}</h1>
+            <h1>{this.state.name} {this.state.current}</h1>
             <div className="content">
                 <div className="leftdiv">
                     <h2>Connect your appliances with our device to monitor how much electricity you use daily and control the power</h2>
