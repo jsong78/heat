@@ -95,6 +95,28 @@ module.exports = function(router) {
         });
 	});
 
+	// 4/15/18
+	router.get('/api/current/appliance', function(req,res){
+		user.findOne({'name':"Jamie"},function(err,userdata){
+			if(err || userdata===null){
+				// console.log(userdata);
+				// console.log(err);
+							res.status(404).send({
+								message: "user not found",
+								current: []
+							});
+			}
+			else{
+				// console.log(userdata);
+				res.status(200).send({
+					message:"GET current successful for this user",
+					current0: userdata.appliance[0].current,
+					current1: userdata.appliance[1].current
+				});
+			}
+		});
+	});
+
 
 
 	return router;
